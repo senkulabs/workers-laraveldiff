@@ -26,6 +26,8 @@ export default {
 
 				response.headers.set('Cache-Control', 'public, max-age=3600');
 				response.headers.set('Content-Type', 'application/json');
+				response.headers.set('Access-Control-Allow-Origin', '*');
+				response.headers.set('Access-Control-Allow-Methods', 'GET');
 
 				// Put the response in the cache
 				ctx.waitUntil(cache.put(cacheKey, response.clone()));
@@ -42,7 +44,9 @@ export default {
 			if (!sourceVersion && !targetVersion) {
 				return new Response('Missing source or target query parameter', {
 					headers: {
-						'Content-Type': 'application/json'
+						'Content-Type': 'application/json',
+						'Access-Control-Allow-Origin': '*',
+						'Access-Control-Allow-Headers': 'GET, POST'
 					},
 					status: 400
 				});
@@ -59,7 +63,9 @@ export default {
 					response = new Response(JSON.stringify(json), {
 						headers: {
 							'Cache-Control': 'public, max-age=3600',
-							'Content-Type': 'application/json'
+							'Content-Type': 'application/json',
+							'Access-Control-Allow-Origin': '*',
+							'Access-Control-Allow-Headers': 'GET, POST'
 						}
 					});
 
@@ -69,7 +75,9 @@ export default {
 					response = new Response(JSON.stringify({ "message": error.message }), {
 						headers: {
 							'Cache-Control': 'public, max-age=3600',
-							'Content-Type': 'application/json'
+							'Content-Type': 'application/json',
+							'Access-Control-Allow-Origin': '*',
+							'Access-Control-Allow-Headers': 'GET, POST'
 						},
 						status: 404
 					});
