@@ -47,7 +47,7 @@ export async function getDiff(repository, sourceVersion, targetVersion) {
 			}
 		}
 
-		const result = files.map((/** @type {{ sha: any; filename: any; patch: string; }} */ item) => {
+		const result = files.filter((/** @type {{ sha: any; filename: any; patch: string; }} */ item) => {
             if (item.patch !== undefined) {
                 return {
                     sha: item.sha,
