@@ -48,13 +48,15 @@ export async function getDiff(repository, sourceVersion, targetVersion) {
 		}
 
 		const result = files.map((/** @type {{ sha: any; filename: any; patch: string; }} */ item) => {
-			return {
-				sha: item.sha,
-				filename: item.filename,
-				source_url: `https://github.com/${repository}/blob/${sourceVersion}/${item.filename}`,
-				target_url: `https://github.com/${repository}/blob/${targetVersion}/${item.filename}`,
-				lines: parsedLines(item.patch),
-			}
+            if (item.patch !== undefined) {
+                return {
+                    sha: item.sha,
+                    filename: item.filename,
+                    source_url: `https://github.com/${repository}/blob/${sourceVersion}/${item.filename}`,
+                    target_url: `https://github.com/${repository}/blob/${targetVersion}/${item.filename}`,
+                    lines: parsedLines(item.patch),
+                }
+            }
 		});
 
 		return result;
